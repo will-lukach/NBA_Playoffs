@@ -1,0 +1,41 @@
+NBA Playoff Predictions 2025
+===========================
+
+Eastern Conference
+--------------------
+
+Cavaliers                 100.0% (PLAYOFF BOUND)
+Celtics                   100.0% (PLAYOFF BOUND)
+Knicks                    99.1% (PLAYOFF BOUND)
+Bucks                     97.4% (PLAYOFF BOUND)
+Pacers                    92.3% (PLAYOFF BOUND)
+Pistons                   71.3% (PLAYOFF BOUND)
+Magic                     54.9% (PLAYOFF BOUND)
+Heat                      19.6% (PREDICTED OUT)
+76ers                     10.8% (PREDICTED OUT)
+Bulls                     7.7% (PREDICTED OUT)
+Hawks                     5.7% (PREDICTED OUT)
+Nets                      4.3% (PREDICTED OUT)
+Wizards                   0.8% (PREDICTED OUT)
+Hornets                   0.7% (PREDICTED OUT)
+Raptors                   0.4% (PREDICTED OUT)
+
+Western Conference
+--------------------
+
+Thunder                   99.6% (PLAYOFF BOUND)
+Timberwolves              97.9% (PLAYOFF BOUND)
+Rockets                   95.4% (PLAYOFF BOUND)
+Grizzlies                 93.1% (PLAYOFF BOUND)
+Lakers                    92.8% (PLAYOFF BOUND)
+Nuggets                   92.0% (PLAYOFF BOUND)
+Clippers                  89.6% (PLAYOFF BOUND)
+Warriors                  74.5% (PLAYOFF BOUND)
+Kings                     21.3% (PREDICTED OUT)
+Mavericks                 15.1% (PREDICTED OUT)
+Suns                      5.5% (PREDICTED OUT)
+Trail Blazers             3.4% (PREDICTED OUT)
+Spurs                     1.4% (PREDICTED OUT)
+Pelicans                  0.4% (PREDICTED OUT)
+Jazz                      0.3% (PREDICTED OUT)
+

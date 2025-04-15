@@ -1,8 +1,44 @@
-.DS_Store
-.ipynb_checkpoints/DS_Model-checkpoint.ipynb
-.ipynb_checkpoints/DS_Model_allstats-checkpoint.ipynb
-.ipynb_checkpoints/DS_Model_allstats_scaled-checkpoint.ipynb
-.ipynb_checkpoints/Preprocessing-checkpoint.ipynb
-.ipynb_checkpoints/random_forests-checkpoint.ipynb
-.ipynb_checkpoints/*
-*/.ipynb_checkpoints/*
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.sailplane/
+
+# Project specific
+NBA_data/cache/
+NBA_data/current_season.csv
+NBA_data/historical_data.csv
+NBA_data/processed_data.csv
+
+# Keep these files
+!NBA_data/playoff_simulations.json
+!NBA_data/predictions_2025.txt
+!requirements.txt
