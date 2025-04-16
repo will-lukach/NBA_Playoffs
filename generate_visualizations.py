@@ -92,6 +92,67 @@ class Visualizer:
                 f'const bracketData = {json.dumps(bracket_data, indent=2)}'
             ))
 
+    def plot_feature_importance(self, models, features, conference):
+        """Plot feature importance for each model"""
+        plt.figure(figsize=(15, 10))
+        
+        for i, (name, model) in enumerate(models.items()):
+            if hasattr(model, 'coef_'):
+                # For logistic regression and SVM
+                importance = np.abs(model.coef_[0])
+            elif hasattr(model, 'feature_importances_'):
+                # For random forest
+                importance = model.feature_importances_
+            else:
+                continue
+            
+            plt.subplot(1, len(models), i+1)
+            sns.barplot(x=importance, y=features)
+            plt.title(f"{name} Feature Importance\n{conference} Conference")
+            plt.xlabel("Importance")
+            plt.tight_layout()
+        
+        plt.savefig(os.path.join(self.output_dir, f"feature_importance_{conference}.png"))
+        plt.close()
+
+    def plot_confusion_matrices(self, y_true, predictions, conference):
+        """Plot confusion matrices for each model"""
+        plt.figure(figsize=(15, 5))
+        
+        for i, (name, y_pred) in enumerate(predictions.items()):
+            plt.subplot(1, len(predictions), i+1)
+            cm = confusion_matrix(y_true, y_pred)
+            sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+            plt.title(f"{name} Confusion Matrix\n{conference} Conference")
+            plt.xlabel("Predicted")
+            plt.ylabel("Actual")
+        
+        plt.tight_layout()
+        plt.savefig(os.path.join(self.output_dir, f"confusion_matrices_{conference}.png"))
+        plt.close()
+
+    def plot_prediction_probabilities(self, probabilities, teams, conference, year=2025):
+        """Plot prediction probabilities for each team"""
+        plt.figure(figsize=(12, 8))
+        
+        # Calculate average probabilities across models
+        avg_proba = np.mean([prob for prob in probabilities.values()], axis=0)
+        
+        # Sort teams by probability
+        sorted_indices = np.argsort(avg_proba)[::-1]
+        sorted_teams = teams[sorted_indices]
+        sorted_probas = avg_proba[sorted_indices]
+        
+        # Create bar plot
+        sns.barplot(x=sorted_probas, y=sorted_teams)
+        plt.title(f"{year} Playoff Probabilities - {conference} Conference")
+        plt.xlabel("Probability")
+        plt.axvline(x=0.5, color='red', linestyle='--', alpha=0.5)
+        
+        plt.tight_layout()
+        plt.savefig(os.path.join(self.output_dir, f"playoff_probabilities_{conference}_{year}.png"))
+        plt.close()
+
     def plot_round_probabilities(self, simulation_results):
         """Plot round-by-round advancement probabilities for all teams"""
         # Collect probabilities for each team in each round

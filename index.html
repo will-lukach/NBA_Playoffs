@@ -4,182 +4,466 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBA Playoff Predictions</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background-color: #121212;
+            background-color: #1a1a1a;
             color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 100%);
         }
-        .team-box {
-            background-color: white;
-            border-radius: 0.375rem;
-            overflow: hidden;
-            margin-bottom: 2px;
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 60px;
+            gap: 20px;
+        }
+
+        .nba-logo {
+            height: 50px;
+        }
+
+        .playoffs-text {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .bracket-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 40px;
+            padding: 0 20px;
             position: relative;
-            transition: transform 0.2s;
         }
+
+        .conference {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .finals {
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 100px;
+        }
+
+        .matchup {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 30px;
+        }
+
+        .team-box {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f0;
+            height: 44px;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 2px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
         .team-box:hover {
             transform: scale(1.02);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+            z-index: 1;
         }
+
         .team-seed {
-            width: 2.5rem;
-            height: 2.5rem;
-            background-color: #e5e7eb;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: black;
+            color: #000;
+            background-color: #e6e6e0;
+            font-size: 18px;
         }
-        .team-name {
-            flex: 1;
-            padding: 0 0.5rem;
-            font-weight: bold;
-            color: black;
-            display: flex;
-            align-items: center;
-        }
+
         .team-logo {
-            width: 2.5rem;
-            height: 2.5rem;
+            width: 36px;
+            height: 36px;
+            margin: 0 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: transparent;
         }
+
         .team-logo img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
         }
-        .team-probability {
-            position: absolute;
-            right: 3.5rem;
-            font-size: 0.75rem;
-            color: #4b5563;
-            font-weight: 600;
+
+        .team-name {
+            flex: 1;
+            color: #000;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 20px;
+            margin-left: 20px;
         }
+
+        .team-probability {
+            margin-right: 25px;
+            color: #666;
+            font-size: 14px;
+            font-weight: 600;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .empty-matchup {
+            height: 90px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .connector {
+            width: 2px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 0 auto;
+        }
+
         .round-title {
             text-align: center;
-            color: #9ca3af;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            color: #999;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 1px;
         }
-        .connector {
-            background-color: #6b7280;
-            opacity: 0.3;
+
+        .conference-title {
+            text-align: center;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        .empty-box {
-            background-color: #1f2937;
-            border: 1px solid #374151;
-            border-radius: 0.375rem;
-            height: 2.5rem;
+
+        /* Reverse team box layout for Eastern Conference */
+        .conference.east .team-box {
+            flex-direction: row-reverse;
+        }
+
+        .conference.east .team-name {
+            text-align: right;
+        }
+
+        .round {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        /* Add gradient background to the bracket */
+        .bracket-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 60%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+            z-index: -1;
+            filter: blur(50px);
+        }
+
+        /* Add vertical lines connecting rounds */
+        .round::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 2px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: -1;
+        }
+
+        .conference.west .round::after {
+            right: -20px;
+        }
+
+        .conference.east .round::after {
+            left: -20px;
         }
     </style>
 </head>
 <body>
-    <div class="min-h-screen p-8">
-        <!-- Header -->
-        <div class="flex justify-center items-center mb-8">
-            <div class="flex items-center gap-2">
-                <div class="bg-white p-2">
-                    <span class="font-bold text-black text-xl">ML</span>
-                </div>
-                <span class="text-white text-xl font-bold">×</span>
-                <div class="text-white font-bold text-xl">MODEL PREDICTIONS</div>
+    <div class="bracket-background"></div>
+    <div class="header">
+        <img src="Images/nba_no_background.png" alt="NBA" class="nba-logo">
+        <div class="playoffs-text">PLAYOFFS</div>
+    </div>
+
+    <div class="bracket-container">
+        <!-- Western Conference -->
+        <div class="conference west">
+            <div id="western-conference">
+                <!-- Content will be populated by JavaScript -->
             </div>
         </div>
 
-        <!-- Bracket Container -->
-        <div class="flex flex-col md:flex-row justify-center w-full">
-            <div class="w-full flex flex-col md:flex-row justify-between gap-4 md:gap-8">
-                <!-- Western Conference -->
-                <div class="w-full md:w-5/12" id="western-conference">
-                    <h2 class="text-xl font-bold text-center mb-8 text-white">Western Conference</h2>
-                </div>
+        <!-- Finals -->
+        <div class="finals">
+            <div class="connector"></div>
+            <div class="empty-matchup"></div>
+            <div class="round-title">NBA FINALS</div>
+            <div class="empty-matchup"></div>
+            <div class="connector"></div>
+        </div>
 
-                <!-- Championship -->
-                <div class="w-full md:w-2/12 flex flex-col items-center justify-center">
-                    <div class="connector h-16 w-px"></div>
-                    <div class="empty-box w-full mb-2"></div>
-                    <div class="text-white font-bold text-center mb-4">CHAMPION</div>
-                    <div class="empty-box w-full"></div>
-                    <div class="connector h-16 w-px"></div>
-                </div>
-
-                <!-- Eastern Conference -->
-                <div class="w-full md:w-5/12" id="eastern-conference">
-                    <h2 class="text-xl font-bold text-center mb-8 text-white">Eastern Conference</h2>
-                </div>
+        <!-- Eastern Conference -->
+        <div class="conference east">
+            <div id="eastern-conference">
+                <!-- Content will be populated by JavaScript -->
             </div>
         </div>
     </div>
 
     <script>
-        // We'll populate this with Python-generated data
+        // Initialize bracketData with simulation results
         const bracketData = {
-            // Data will be injected here
+            "title": "MODEL PREDICTIONS",
+            "rounds": [
+                {
+                    "name": "First Round",
+                    "matchups": [
+                        {
+                            "team1": {
+                                "name": "Thunder",
+                                "seed": 1,
+                                "logo": "Images/logos/Thunder.png",
+                                "probability": 0.9408
+                            },
+                            "team2": {
+                                "name": "Grizzlies",
+                                "seed": 8,
+                                "logo": "Images/logos/Grizzlies.png",
+                                "probability": 0.05920000000000003
+                            }
+                        },
+                        {
+                            "team1": {
+                                "name": "Nuggets",
+                                "seed": 4,
+                                "logo": "Images/logos/Nuggets.png",
+                                "probability": 0.5103
+                            },
+                            "team2": {
+                                "name": "Clippers",
+                                "seed": 5,
+                                "logo": "Images/logos/Clippers.png",
+                                "probability": 0.4897
+                            }
+                        },
+                        {
+                            "team1": {
+                                "name": "Lakers",
+                                "seed": 3,
+                                "logo": "Images/logos/Lakers.png",
+                                "probability": 0.3205
+                            },
+                            "team2": {
+                                "name": "Timberwolves",
+                                "seed": 6,
+                                "logo": "Images/logos/Timberwolves.png",
+                                "probability": 0.6795
+                            }
+                        },
+                        {
+                            "team1": {
+                                "name": "Rockets",
+                                "seed": 2,
+                                "logo": "Images/logos/Rockets.png",
+                                "probability": 0.5614
+                            },
+                            "team2": {
+                                "name": "Warriors",
+                                "seed": 7,
+                                "logo": "Images/logos/Warriors.png",
+                                "probability": 0.4386
+                            }
+                        },
+                        {
+                            "team1": {
+                                "name": "Cavaliers",
+                                "seed": 1,
+                                "logo": "Images/logos/Cavaliers.png",
+                                "probability": 0.976
+                            },
+                            "team2": {
+                                "name": "Hawks",
+                                "seed": 8,
+                                "logo": "Images/logos/Hawks.png",
+                                "probability": 0.02400000000000002
+                            }
+                        },
+                        {
+                            "team1": {
+                                "name": "Pacers",
+                                "seed": 4,
+                                "logo": "Images/logos/Pacers.png",
+                                "probability": 0.5496
+                            },
+                            "team2": {
+                                "name": "Bucks",
+                                "seed": 5,
+                                "logo": "Images/logos/Bucks.png",
+                                "probability": 0.4504
+                            }
+                        },
+                        {
+                            "team1": {
+                                "name": "Knicks",
+                                "seed": 3,
+                                "logo": "Images/logos/Knicks.png",
+                                "probability": 0.6241
+                            },
+                            "team2": {
+                                "name": "Pistons",
+                                "seed": 6,
+                                "logo": "Images/logos/Pistons.png",
+                                "probability": 0.3759
+                            }
+                        },
+                        {
+                            "team1": {
+                                "name": "Celtics",
+                                "seed": 2,
+                                "logo": "Images/logos/Celtics.png",
+                                "probability": 0.9655
+                            },
+                            "team2": {
+                                "name": "Magic",
+                                "seed": 7,
+                                "logo": "Images/logos/Magic.png",
+                                "probability": 0.034499999999999975
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Conference Semifinals",
+                    "matchups": [
+                        {
+                            "team1": null,
+                            "team2": null
+                        },
+                        {
+                            "team1": null,
+                            "team2": null
+                        },
+                        {
+                            "team1": null,
+                            "team2": null
+                        },
+                        {
+                            "team1": null,
+                            "team2": null
+                        }
+                    ]
+                },
+                {
+                    "name": "Conference Finals",
+                    "matchups": [
+                        {
+                            "team1": null,
+                            "team2": null
+                        },
+                        {
+                            "team1": null,
+                            "team2": null
+                        }
+                    ]
+                },
+                {
+                    "name": "Finals",
+                    "matchups": [
+                        {
+                            "team1": null,
+                            "team2": null
+                        }
+                    ]
+                }
+            ]
         };
 
         function createMatchupElement(matchup, isEastern = false) {
             const container = document.createElement('div');
-            container.className = 'matchup mb-8';
+            container.className = 'matchup';
 
             if (matchup.team1 && matchup.team2) {
                 // Team 1 Box
                 const team1Box = document.createElement('div');
-                team1Box.className = 'team-box flex items-center';
-                if (isEastern) {
-                    team1Box.innerHTML = `
-                        <div class="team-logo">
-                            <img src="${matchup.team1.logo}" alt="${matchup.team1.name}" width="30" height="30">
-                        </div>
-                        <div class="team-name text-right">${matchup.team1.name}</div>
-                        <div class="team-probability">${matchup.team1.probability}</div>
-                        <div class="team-seed">${matchup.team1.seed}</div>
-                    `;
-                } else {
-                    team1Box.innerHTML = `
-                        <div class="team-seed">${matchup.team1.seed}</div>
+                team1Box.className = 'team-box';
+                team1Box.innerHTML = `
+                    ${isEastern ? `
+                        <div class="team-probability">${(matchup.team1.probability * 100).toFixed(1)}%</div>
                         <div class="team-name">${matchup.team1.name}</div>
-                        <div class="team-probability">${matchup.team1.probability}</div>
                         <div class="team-logo">
-                            <img src="${matchup.team1.logo}" alt="${matchup.team1.name}" width="30" height="30">
+                            <img src="${matchup.team1.logo}" alt="${matchup.team1.name}">
                         </div>
-                    `;
-                }
+                        <div class="team-seed">${matchup.team1.seed}</div>
+                    ` : `
+                        <div class="team-seed">${matchup.team1.seed}</div>
+                        <div class="team-logo">
+                            <img src="${matchup.team1.logo}" alt="${matchup.team1.name}">
+                        </div>
+                        <div class="team-name">${matchup.team1.name}</div>
+                        <div class="team-probability">${(matchup.team1.probability * 100).toFixed(1)}%</div>
+                    `}
+                `;
 
                 // Team 2 Box
                 const team2Box = document.createElement('div');
-                team2Box.className = 'team-box flex items-center';
-                if (isEastern) {
-                    team2Box.innerHTML = `
-                        <div class="team-logo">
-                            <img src="${matchup.team2.logo}" alt="${matchup.team2.name}" width="30" height="30">
-                        </div>
-                        <div class="team-name text-right">${matchup.team2.name}</div>
-                        <div class="team-probability">${matchup.team2.probability}</div>
-                        <div class="team-seed">${matchup.team2.seed}</div>
-                    `;
-                } else {
-                    team2Box.innerHTML = `
-                        <div class="team-seed">${matchup.team2.seed}</div>
+                team2Box.className = 'team-box';
+                team2Box.innerHTML = `
+                    ${isEastern ? `
+                        <div class="team-probability">${(matchup.team2.probability * 100).toFixed(1)}%</div>
                         <div class="team-name">${matchup.team2.name}</div>
-                        <div class="team-probability">${matchup.team2.probability}</div>
                         <div class="team-logo">
-                            <img src="${matchup.team2.logo}" alt="${matchup.team2.name}" width="30" height="30">
+                            <img src="${matchup.team2.logo}" alt="${matchup.team2.name}">
                         </div>
-                    `;
-                }
+                        <div class="team-seed">${matchup.team2.seed}</div>
+                    ` : `
+                        <div class="team-seed">${matchup.team2.seed}</div>
+                        <div class="team-logo">
+                            <img src="${matchup.team2.logo}" alt="${matchup.team2.name}">
+                        </div>
+                        <div class="team-name">${matchup.team2.name}</div>
+                        <div class="team-probability">${(matchup.team2.probability * 100).toFixed(1)}%</div>
+                    `}
+                `;
 
                 container.appendChild(team1Box);
                 container.appendChild(team2Box);
             } else {
-                container.innerHTML = '<div class="empty-box"></div>';
+                container.innerHTML = '<div class="empty-matchup"></div>';
             }
 
             return container;
@@ -187,15 +471,13 @@
 
         function createRoundSection(roundData, isEastern = false) {
             const container = document.createElement('div');
-            container.className = 'mb-16';
+            container.className = 'round';
             
-            // Add round title
             const title = document.createElement('h3');
             title.className = 'round-title';
             title.textContent = roundData.name;
             container.appendChild(title);
             
-            // Add matchups
             roundData.matchups.forEach(matchup => {
                 container.appendChild(createMatchupElement(matchup, isEastern));
             });
@@ -208,8 +490,19 @@
             const easternConference = document.getElementById('eastern-conference');
 
             // Clear existing content
-            westernConference.innerHTML = '<h2 class="text-xl font-bold text-center mb-8 text-white">Western Conference</h2>';
-            easternConference.innerHTML = '<h2 class="text-xl font-bold text-center mb-8 text-white">Eastern Conference</h2>';
+            westernConference.innerHTML = '';
+            easternConference.innerHTML = '';
+
+            // Add conference titles
+            const westTitle = document.createElement('h2');
+            westTitle.className = 'conference-title';
+            westTitle.textContent = 'WESTERN CONFERENCE';
+            westernConference.appendChild(westTitle);
+
+            const eastTitle = document.createElement('h2');
+            eastTitle.className = 'conference-title';
+            eastTitle.textContent = 'EASTERN CONFERENCE';
+            easternConference.appendChild(eastTitle);
 
             // Render each round
             bracketData.rounds.forEach((round, index) => {
@@ -219,23 +512,11 @@
                     
                     westernConference.appendChild(createRoundSection(westMatchups, false));
                     easternConference.appendChild(createRoundSection(eastMatchups, true));
-                } else { // NBA Finals
-                    const champion = document.querySelector('.text-white.font-bold.text-center.mb-4');
-                    if (round.matchups[0].team1 && round.matchups[0].team2) {
-                        champion.innerHTML = `
-                            <div class="text-sm mb-2">NBA FINALS</div>
-                            <div class="flex justify-center items-center gap-2">
-                                <img src="${round.matchups[0].team1.logo}" alt="${round.matchups[0].team1.name}" width="24" height="24">
-                                <span>vs</span>
-                                <img src="${round.matchups[0].team2.logo}" alt="${round.matchups[0].team2.name}" width="24" height="24">
-                            </div>
-                        `;
-                    }
                 }
             });
         }
 
-        // Render the bracket when the data is loaded
+        // Render the bracket when the page loads
         document.addEventListener('DOMContentLoaded', renderBracket);
     </script>
 </body>

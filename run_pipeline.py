@@ -83,21 +83,17 @@ def main():
     print("=" * 40 + "\n")
 
     try:
-        from generate_visualizations import Visualizer
-        import json
-
         # Load simulation results
         with open("NBA_data/playoff_simulations.json", "r") as f:
+            import json
             simulation_results = json.load(f)
 
         # Create visualizations
+        from generate_visualizations import Visualizer
         visualizer = Visualizer()
         
         # Generate playoff bracket with all matchups
         visualizer.plot_playoff_bracket(simulation_results)
-        
-        # Generate round probabilities
-        visualizer.plot_round_probabilities(simulation_results)
         
         print("\nPlayoff visualizations completed successfully!")
     except Exception as e:

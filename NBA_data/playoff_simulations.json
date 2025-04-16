@@ -9,13 +9,13 @@
             "name": "Thunder",
             "seed": 1,
             "logo": "/Images/logos/Thunder.png",
-            "probability": 0.9354
+            "probability": 0.9375
           },
           "team2": {
             "name": "Grizzlies",
             "seed": 8,
             "logo": "/Images/logos/Grizzlies.png",
-            "probability": 0.06459999999999999
+            "probability": 0.0625
           }
         },
         {
@@ -23,13 +23,13 @@
             "name": "Nuggets",
             "seed": 4,
             "logo": "/Images/logos/Nuggets.png",
-            "probability": 0.5012
+            "probability": 0.5019
           },
           "team2": {
             "name": "Clippers",
             "seed": 5,
             "logo": "/Images/logos/Clippers.png",
-            "probability": 0.4988
+            "probability": 0.4981
           }
         },
         {
@@ -37,13 +37,13 @@
             "name": "Lakers",
             "seed": 3,
             "logo": "/Images/logos/Lakers.png",
-            "probability": 0.3235
+            "probability": 0.3231
           },
           "team2": {
             "name": "Timberwolves",
             "seed": 6,
             "logo": "/Images/logos/Timberwolves.png",
-            "probability": 0.6765
+            "probability": 0.6769000000000001
           }
         },
         {
@@ -51,13 +51,13 @@
             "name": "Rockets",
             "seed": 2,
             "logo": "/Images/logos/Rockets.png",
-            "probability": 0.5523
+            "probability": 0.5617
           },
           "team2": {
             "name": "Warriors",
             "seed": 7,
             "logo": "/Images/logos/Warriors.png",
-            "probability": 0.4477
+            "probability": 0.4383
           }
         },
         {
@@ -65,13 +65,13 @@
             "name": "Cavaliers",
             "seed": 1,
             "logo": "/Images/logos/Cavaliers.png",
-            "probability": 0.9776
+            "probability": 0.976
           },
           "team2": {
             "name": "Hawks",
             "seed": 8,
             "logo": "/Images/logos/Hawks.png",
-            "probability": 0.022399999999999975
+            "probability": 0.02400000000000002
           }
         },
         {
@@ -79,13 +79,13 @@
             "name": "Pacers",
             "seed": 4,
             "logo": "/Images/logos/Pacers.png",
-            "probability": 0.5407
+            "probability": 0.5434
           },
           "team2": {
             "name": "Bucks",
             "seed": 5,
             "logo": "/Images/logos/Bucks.png",
-            "probability": 0.45930000000000004
+            "probability": 0.4566
           }
         },
         {
@@ -93,13 +93,13 @@
             "name": "Knicks",
             "seed": 3,
             "logo": "/Images/logos/Knicks.png",
-            "probability": 0.6309
+            "probability": 0.6229
           },
           "team2": {
             "name": "Pistons",
             "seed": 6,
             "logo": "/Images/logos/Pistons.png",
-            "probability": 0.3691
+            "probability": 0.3771
           }
         },
         {
@@ -107,13 +107,13 @@
             "name": "Celtics",
             "seed": 2,
             "logo": "/Images/logos/Celtics.png",
-            "probability": 0.9681
+            "probability": 0.964
           },
           "team2": {
             "name": "Magic",
             "seed": 7,
             "logo": "/Images/logos/Magic.png",
-            "probability": 0.03190000000000004
+            "probability": 0.03600000000000003
           }
         }
       ]
