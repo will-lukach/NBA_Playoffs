@@ -4,7 +4,7 @@
 
 ## Overview
 
-A comprehensive NBA playoffs prediction system that combines advanced machine learning models with an interactive playoff bracket visualization. While initially inspired by [hanesy's NBA Playoffs project](https://github.com/hanesy/NBA_Playoffs), this is a new project with significant enhancements and a different approach to playoff predictions.
+A comprehensive NBA playoffs prediction system that combines advanced machine learning models with an interactive playoff bracket visualization. This project was inspired by [hanesy's NBA Playoffs project](https://github.com/hanesy/NBA_Playoffs).
 
 ## Key Features
 
@@ -116,7 +116,7 @@ This project builds upon the foundation laid by the original [NBA Playoffs predi
 - Diana Silva
 - Heain Yee
 
-Their work provided valuable insights into the initial approach to NBA playoff predictions, though this project has evolved in a significantly different direction with its own unique implementation and features.
+Their work provided valuable insights into the initial approach to NBA playoff predictions.
 
 ## Data Sources
 
